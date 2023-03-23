@@ -1,5 +1,6 @@
 <template>
   <v-container class="pa-4 text-center">
+    <h2>세상에게</h2>
     <v-row class="fill-height" align="center" justify="center">
       <template>
         <v-col v-for="(item, index) in items" :key="index" cols="12" md="10">

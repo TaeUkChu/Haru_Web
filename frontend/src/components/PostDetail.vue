@@ -24,12 +24,24 @@
           </div>
           <br />
           <div>
-            <v-card @click="keybert(post.id)"
-              ><h2 class="my-hover">Keybert 변환</h2>
-            </v-card>
+            <strong>HASHTAGS:</strong>
+            <v-autocomplete
+              v-model="values"
+              v-if="post.hashtags"
+              :items="post.hashtags"
+              outlined
+              dense
+              chips
+              small-chips
+              label="Outlined"
+              multiple
+            ></v-autocomplete>
           </div>
+          <img :src="image" height="100px" width="150px" />
+          <v-img img src="http://116.38.220.14/imgview/10"></v-img>
         </v-card>
       </v-col>
+
       <v-col cols="12" sm="4" lg="3">
         <v-card class="pa-2 mb-5" tile>
           <p>prev post</p>
@@ -74,11 +86,15 @@
 
 <script>
 import axios from "axios";
+import testImage from "@/assets/cat.png";
 
 export default {
   data: () => ({
     post: {},
     tagCloud: [],
+    items: [],
+    values: [],
+    image: testImage,
   }),
 
   created() {
@@ -130,20 +146,6 @@ export default {
       console.log("serverPage()...", tagname);
       location.href = `/blog/post/list/?tagname=${tagname}`;
       // location.href = `/post_list.html?tagname=${tagname}`;
-    },
-    keybert(postId) {
-      console.log("keybert()...", postId);
-      axios
-        .get(`/api/post/${postId}/keybert/`)
-        .then((res) => {
-          console.log("POST DETAIL GET RES", res);
-          alert("Keybert 받아오는 중입니다 조금만 기다려주세요");
-          this.post = res.data;
-        })
-        .catch((err) => {
-          console.log("POST DETAIL GET ERR.RESPONSE", err.response);
-          alert(err.response.status + " " + err.response.statusText);
-        });
     },
   },
 };

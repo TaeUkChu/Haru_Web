@@ -13,8 +13,7 @@ from taggit.models import Tag
 from blog.models import Post
 from accounts.forms import MyUserCreationForm
 from accounts.views import MyLoginRequiredMixin, OwnerOnlyMixin
-from api.views_util import obj_to_post, prev_next_post, make_tag_cloud
-from api.views_util import FindKey
+from api.views_util import obj_to_post, prev_next_post, make_tag_cloud, to_hashtag_list
 
 class ApiPostLV(BaseListView):
     # model = Post
@@ -40,6 +39,7 @@ class ApiPostDV(BaseDetailView):
         obj = context['object']
         post = obj_to_post(obj)
         post['prev'], post['next'] = prev_next_post(obj)
+        post['hashtags'] = to_hashtag_list(obj.content)
         return JsonResponse(data=post, safe=True, status=200)
 
 
@@ -161,12 +161,3 @@ class ApiPostDelV(OwnerOnlyMixin, BaseDeleteView):
         self.object = self.get_object()
         self.object.delete()
         return JsonResponse(data={}, safe=True, status=204)
-
-class ApiKeybert(BaseDetailView):
-    model = Post
-
-    def render_to_response(self, context, **response_kwargs):
-        obj = context['object']
-        post = obj_to_post(obj)
-        post['content'] = FindKey(obj.content).textkey(1,2)[0][0]
-        return JsonResponse(data=post, safe=True, status=200)
