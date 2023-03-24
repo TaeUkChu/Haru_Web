@@ -1,6 +1,8 @@
 <template>
   <v-container class="pa-4 text-center">
-    <h2>세상에게</h2>
+    <br />
+    <h1>데모 버전 (Home)</h1>
+    <br />
     <v-row class="fill-height" align="center" justify="center">
       <template>
         <v-col v-for="(item, index) in items" :key="index" cols="12" md="10">
@@ -25,11 +27,11 @@
                       <p
                         class="text-caption font-weight-medium font-italic text-left"
                       >
-                        {{ item.subtext }}
+                        {{ item.tag }}
                       </p>
                     </div>
 
-                    <div class="align-self-center">
+                    <!-- <div class="align-self-center">
                       <v-btn
                         v-for="(icon, index) in icons"
                         :key="index"
@@ -44,7 +46,7 @@
                           {{ icon }}
                         </v-icon>
                       </v-btn>
-                    </div>
+                    </div> -->
                   </v-row>
                 </v-card-title>
               </v-img>
@@ -63,45 +65,45 @@ export default {
     items: [
       {
         title: "2023.03.21",
-        text: `오늘 완전 좋았어. 행복해`,
-        subtext: "Newly released songs. Updated daily.",
+        text: "대학 축제에 나훈아가 와서 공연했어! 대박 존잼!!!!",
+        tag: "# 축제 # 나훈아 # 공연.",
         img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
       },
       {
-        title: "Rock",
-        text: "Greatest Rock Hits",
-        subtext: "Lose yourself in rock tunes.",
+        title: "2023.03.20",
+        text: `티켓이 생겨서 처음으로 밴드 보러 갔어. 일렉기타 완전 좋았어. 행복해`,
+        tag: "# 밴드, # 행복 # 일렉기타",
         img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
       },
       {
-        title: "Mellow Moods",
-        text: "Ambient Bass",
-        subtext: "Chill beats to mellow you out.",
+        title: "2023.03.19",
+        text: "와 하늘이 너무 예뻐 마치 꿈나라 같아.",
+        tag: "# 하늘 # 예뻐 # 꿈나라",
         img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
       },
 
       {
+        title: "2023.03.18",
+        text: "여자친구랑 고양이 카페에서 고양이랑 뒹굴뒹굴 하루종일 놀았다. 고양이 최고",
+        tag: "# 고양이 # 카페 # 여자친구",
+        img: "https://th.bing.com/th/id/OIP.emqIME5C3-k5aQZMAV8w2AHaFj?w=228&h=180&c=7&r=0&o=5&pid=1.7",
+      },
+      {
         title: "Mellow Moods",
         text: "Ambient Bass",
-        subtext: "Chill beats to mellow you out.",
+        tag: "Chill beats to mellow you out.",
         img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
       },
       {
         title: "Mellow Moods",
         text: "Ambient Bass",
-        subtext: "Chill beats to mellow you out.",
+        tag: "Chill beats to mellow you out.",
         img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
       },
       {
         title: "Mellow Moods",
         text: "Ambient Bass",
-        subtext: "Chill beats to mellow you out.",
-        img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-      },
-      {
-        title: "Mellow Moods",
-        text: "Ambient Bass",
-        subtext: "Chill beats to mellow you out.",
+        tag: "Chill beats to mellow you out.",
         img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
       },
     ],
@@ -120,7 +122,7 @@ export default {
   opacity: 0.6;
 }
 
-.show-btns {
+/* .show-btns {
   color: rgba(255, 255, 255, 1) !important;
-}
+} */
 </style>

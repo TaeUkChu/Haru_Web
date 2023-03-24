@@ -38,7 +38,7 @@
             ></v-autocomplete>
           </div>
           <img :src="image" height="100px" width="150px" />
-          <v-img img src="http://116.38.220.14/imgview/10"></v-img>
+          <v-img img src="http://116.38.220.14/imgview/10.png"></v-img>
         </v-card>
       </v-col>
 

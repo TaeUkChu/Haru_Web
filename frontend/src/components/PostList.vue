@@ -5,15 +5,15 @@
       :items="posts"
       sort-by="name"
       class="elevation-1"
-      :items-per-page="5"
+      :items-per-page="10"
       @click:row="serverPage"
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
           <v-toolbar-title>
-            Post List
+            일기장 전체 목록
             <span v-if="tagname" class="body-1 font-italic ml-3"
-              >(with {{ tagname }} tagged)</span
+              >({{ tagname }}로 태그된 일기)</span
             >
           </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
@@ -23,7 +23,7 @@
             dark
             class="mb-2"
             @click.stop="dialogOpen('create', {})"
-            >New Post</v-btn
+            >일기 작성하기</v-btn
           >
         </v-toolbar>
       </template>
@@ -108,7 +108,7 @@ export default {
         value: "id",
       },
       { text: "제 목", value: "title" },
-      { text: "요 약", value: "description" },
+      { text: "요 약 (날씨, 기분)", value: "description" },
       { text: "수정일", value: "modify_dt" },
       { text: "작성자", value: "owner" },
       { text: "Actions", value: "actions", sortable: false },

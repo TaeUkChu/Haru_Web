@@ -69,3 +69,13 @@ npm i filemanager-webpack-plugin-fixed
 3. python manage.py migrate
 4. python manage.py makemigrations
 5. python manage.py runserver
+
+- 오류
+
+  vue가 path에 등록되지 않아 vue를 인식 못함.
+
+- 해결
+  1. vue 설치되었는지 찾기 : `sudo find / -name vue`
+  2. `/home/user/.yarn/bin/vue` 가 잘 설치 되었는지 확인
+  3. bashrc로 이동 : `code ~/.bashrc`
+  4. bashrc에 path 추가 : `export PATH="/home/user/.yarn/bin/:$PATH”` 추가

@@ -43,6 +43,14 @@ module.exports = {
       title: "VueDjangoWebpack/post_detail.html",
       minify: false,
     },
+
+    text_editor: {
+      template: "public/index.html",
+      entry: "src/pages/main_text_editor.js",
+      filename: "text_editor.html",
+      title: "VueDjangoWebpack/text_editor.html",
+      minify: false,
+    },
   },
 
   configureWebpack: {
