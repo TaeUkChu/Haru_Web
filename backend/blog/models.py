@@ -4,6 +4,7 @@ from django.urls import reverse
 from taggit.managers import TaggableManager #pip install taggit
 
 
+
 class Post(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
     description = models.CharField('DESCRIPTION', max_length=100, blank=True, help_text='simple description text.')

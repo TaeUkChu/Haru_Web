@@ -17,6 +17,8 @@ from django.views.generic import TemplateView
 class PostListTV(TemplateView):
     template_name = 'blog/post_list.html'
 
-
 class PostDetailTV(TemplateView):
     template_name = 'blog/post_detail.html'
+
+class PostDetailImgTV(TemplateView):
+    template_name = 'blog/post_detail_img.html'

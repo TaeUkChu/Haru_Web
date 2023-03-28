@@ -54,8 +54,8 @@
 
       <v-btn text href="/">Home</v-btn>
       <v-btn text href="/blog/post/list/">일기 게시글 리스트</v-btn>
-      <v-btn text href="/admin/">관리자 페이지</v-btn>
       <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn>
+      <v-btn text href="/admin/">관리자 페이지</v-btn>
       <!-- <v-btn text>/</v-btn>
       <v-btn text href="/post_list.html">PostList</v-btn>
       <v-btn text href="/post_detail.html">PostDetail</v-btn> -->

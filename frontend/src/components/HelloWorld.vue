@@ -1,11 +1,17 @@
 <template>
   <v-container class="pa-4 text-center">
     <br />
-    <h1>데모 버전 (Home)</h1>
+    <div>
+      <v-row>
+        <link href="../하루자국.png" rel="shortcut icon" type="image/x-icon" />
+        <h1 class="text-center" id="HomeText">하루 자국</h1>
+      </v-row>
+    </div>
     <br />
+
     <v-row class="fill-height" align="center" justify="center">
       <template>
-        <v-col v-for="(item, index) in items" :key="index" cols="12" md="10">
+        <v-col v-for="(item, index) in items" :key="index" cols="6">
           <v-hover v-slot="{ hover }">
             <v-card :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
               <v-img :src="item.img" height="225px">
@@ -20,12 +26,13 @@
 
                     <div>
                       <p
-                        class="ma-0 text-body-1 font-weight-bold font-italic text-left"
+                        class="ma-10 text-body-1 font-weight-bold font-italic text-center"
                       >
                         {{ item.text }}
                       </p>
                       <p
-                        class="text-caption font-weight-medium font-italic text-left"
+                        id="tag"
+                        class="text-caption font-weight-medium font-italic text-bottom"
                       >
                         {{ item.tag }}
                       </p>
@@ -61,7 +68,7 @@
 <script>
 export default {
   data: () => ({
-    icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
+    // icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
     items: [
       {
         title: "2023.03.21",
@@ -88,24 +95,6 @@ export default {
         tag: "# 고양이 # 카페 # 여자친구",
         img: "https://th.bing.com/th/id/OIP.emqIME5C3-k5aQZMAV8w2AHaFj?w=228&h=180&c=7&r=0&o=5&pid=1.7",
       },
-      {
-        title: "Mellow Moods",
-        text: "Ambient Bass",
-        tag: "Chill beats to mellow you out.",
-        img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-      },
-      {
-        title: "Mellow Moods",
-        text: "Ambient Bass",
-        tag: "Chill beats to mellow you out.",
-        img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-      },
-      {
-        title: "Mellow Moods",
-        text: "Ambient Bass",
-        tag: "Chill beats to mellow you out.",
-        img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-      },
     ],
 
     transparent: "rgba(255, 255, 255, 0)",
@@ -114,12 +103,20 @@ export default {
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap");
 .v-card {
   transition: opacity 0.4s ease-in-out;
 }
 
 .v-card:not(.on-hover) {
   opacity: 0.6;
+}
+#tag {
+  background-color: black;
+}
+
+#HomeText {
+  font-family: "Black And White Picture", sans-serif;
 }
 
 /* .show-btns {

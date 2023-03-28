@@ -12,7 +12,7 @@
         <v-card class="pa-2" outlined tile>
           <p style="white-space: pre-wrap">{{ post.content }}</p>
           <div>
-            <strong>TAGS:</strong>
+            <tag_strong>TAGS:</tag_strong>
             <v-chip
               class="ma-2 my-hover"
               outlined
@@ -24,21 +24,39 @@
           </div>
           <br />
           <div>
-            <strong>HASHTAGS:</strong>
-            <v-autocomplete
-              v-model="values"
-              v-if="post.hashtags"
-              :items="post.hashtags"
-              outlined
-              dense
-              chips
-              small-chips
-              label="Outlined"
-              multiple
-            ></v-autocomplete>
+            <tag_strong>HASHTAGS:</tag_strong>
+            <v-col>
+              <v-row>
+                <v-autocomplete
+                  v-model="values"
+                  v-if="post.hashtags"
+                  :items="post.hashtags"
+                  outlined
+                  dense
+                  chips
+                  small-chips
+                  label="해시태그를 골라주세요 (1~3)"
+                  multiple
+                ></v-autocomplete>
+              </v-row>
+              <v-img :src="url"></v-img>
+              <v-row
+                ><v-btn
+                  class="mx-2"
+                  fab
+                  dark
+                  large
+                  color="cyan"
+                  @click="serverPageImg()"
+                  ><v-icon dark> mdi-pencil </v-icon></v-btn
+                >
+                <h3>[그림 생성 페이지로 이동]</h3></v-row
+              >
+            </v-col>
           </div>
-          <img :src="image" height="100px" width="150px" />
-          <v-img img src="http://116.38.220.14/imgview/10.png"></v-img>
+          <img :src="testimage" height="100px" width="150px" />
+
+          <!-- <img src="/static/imges/4.png"> -->
         </v-card>
       </v-col>
 
@@ -94,7 +112,9 @@ export default {
     tagCloud: [],
     items: [],
     values: [],
-    image: testImage,
+    testimage: testImage,
+    tag_str: "",
+    url: "",
   }),
 
   created() {
@@ -115,6 +135,7 @@ export default {
         .then((res) => {
           console.log("POST DETAIL GET RES", res);
           this.post = res.data;
+          this.url = `http://116.38.220.14/static/imges/${postId}.png`;
         })
         .catch((err) => {
           console.log("POST DETAIL GET ERR.RESPONSE", err.response);
@@ -147,6 +168,12 @@ export default {
       location.href = `/blog/post/list/?tagname=${tagname}`;
       // location.href = `/post_list.html?tagname=${tagname}`;
     },
+    serverPageImg() {
+      const postId = location.pathname.split("/")[3];
+      console.log("serverPage()...");
+      location.replace(`/blog/post/${postId}/img`);
+      // location.href = `/post_detail.html?id=${item.id}`;
+    },
   },
 };
 </script>
@@ -155,5 +182,8 @@ export default {
 .my-hover:hover {
   cursor: pointer;
   font-style: bold;
+}
+.text-center {
+  color: DarkCyan;
 }
 </style>

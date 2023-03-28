@@ -7,6 +7,8 @@ app_name = 'api'
 urlpatterns = [
     path('post/list/', views.ApiPostLV.as_view(), name='post_list'),
     path('post/<int:pk>/', views.ApiPostDV.as_view(), name='post_detail'),
+    path('post/<int:pk>/img/', views.ApiPostImgDV.as_view(), name='post_detail_img'),
+
     path('tag/cloud/', views.ApiTagCloudLV.as_view(), name='tag_cloud'),
 
     path('login/', views.ApiLoginView.as_view(), name='login'),
@@ -18,4 +20,6 @@ urlpatterns = [
     path('post/create/', views.ApiPostCV.as_view(), name='post_create'),
     path('post/<int:pk>/update/', views.ApiPostUV.as_view(), name='post_update'),
     path('post/<int:pk>/delete/', views.ApiPostDelV.as_view(), name='post_delete'),
+
+    # path('post/<int:pk>/generate/', views.ApiGenerateView.as_view(), name='generate')
 ]

@@ -92,3 +92,22 @@ def to_hashtag_list(content):
         hashlist.append(i[0])
     return hashlist
 #print(FindKey("안녕하세요 저는 따뜻한 아이스크림입니다.").textkey(1,2)[0][0])
+
+import requests
+def connect_model(imageId, doc):
+    url = 'http://116.38.220.14/resultAPI' # 고정
+    data = {
+        "doc":doc # 문자열 1줄로 요청
+        ,"imageId": imageId # 이미지 url 뒤에 붙는 숫자값
+        ,"modelId":"1"
+            }
+    result = requests.post(url, json=data)
+    if result.ok:
+        print(result.text)
+        return 0
+    #return JsonResponse(data=postList, safe=False, status=200)
+    else:
+        print("Model Server error")
+        print("doc",doc)
+        print('imgid',imageId)
+        return -1

@@ -12,9 +12,15 @@ module.exports = {
       },
     },
 
-    proxy: "http://127.0.0.1:8000", // xhr only
+    proxy: {
+      "/blog": { target: "http://127.0.0.1:8000", changeOrigin: true },
+      "/api": { target: "http://127.0.0.1:8000", changeOrigin: true },
+      "/http://116.38.220.14/resultAPI": {
+        target: "http://116.38.220.14/resultAPI", // xhr only
+        changeOrigin: true,
+      },
+    },
   },
-
   outputDir: "dist",
   publicPath: "/",
   assetsDir: "static",
@@ -44,13 +50,29 @@ module.exports = {
       minify: false,
     },
 
-    text_editor: {
+    post_detail_img: {
       template: "public/index.html",
-      entry: "src/pages/main_text_editor.js",
-      filename: "text_editor.html",
-      title: "VueDjangoWebpack/text_editor.html",
+      entry: "src/pages/main_post_detail_img.js",
+      filename: "post_detail_img.html",
+      title: "VueDjangoWebpack/post_detail_img.html",
       minify: false,
     },
+
+    post_input: {
+      template: "public/index.html",
+      entry: "src/pages/main_post_input.js",
+      filename: "post_input.html",
+      title: "VueDjangoPhoto/post_input.html",
+      minify: false,
+    },
+
+    // text_editor: {
+    //   template: "public/index.html",
+    //   entry: "src/pages/main_text_editor.js",
+    //   filename: "text_editor.html",
+    //   title: "VueDjangoWebpack/text_editor.html",
+    //   minify: false,
+    // },
   },
 
   configureWebpack: {

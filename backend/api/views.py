@@ -13,7 +13,7 @@ from taggit.models import Tag
 from blog.models import Post
 from accounts.forms import MyUserCreationForm
 from accounts.views import MyLoginRequiredMixin, OwnerOnlyMixin
-from api.views_util import obj_to_post, prev_next_post, make_tag_cloud, to_hashtag_list
+from api.views_util import connect_model, obj_to_post, prev_next_post, make_tag_cloud, to_hashtag_list
 
 class ApiPostLV(BaseListView):
     # model = Post
@@ -40,9 +40,23 @@ class ApiPostDV(BaseDetailView):
         post = obj_to_post(obj)
         post['prev'], post['next'] = prev_next_post(obj)
         post['hashtags'] = to_hashtag_list(obj.content)
+
         return JsonResponse(data=post, safe=True, status=200)
 
 
+class ApiPostImgDV(BaseDetailView):
+    model = Post
+
+    def render_to_response(self, context, **response_kwargs):
+        obj = context['object']
+        post = obj_to_post(obj)
+        post['prev'], post['next'] = prev_next_post(obj)
+        post['hashtags'] = to_hashtag_list(obj.content)
+        # # 이미지 불러오는 함수
+        if connect_model(obj.id,obj.content) == 0:
+            return JsonResponse(data=post, safe=True, status=200)
+        else :
+            return JsonResponse(data={}, safe=True, status=404)
 class ApiTagCloudLV(BaseListView):
     # model = Tag
     queryset = Tag.objects.annotate(count=Count('post'))
@@ -161,3 +175,27 @@ class ApiPostDelV(OwnerOnlyMixin, BaseDeleteView):
         self.object = self.get_object()
         self.object.delete()
         return JsonResponse(data={}, safe=True, status=204)
+
+# import requests
+# # from django.shortcuts import render
+# import json
+# class ApiGenerateView(View):
+#     def get(self, request):
+#         url = 'http://116.38.220.14/resultAPI'
+#         # response = requests.get(url)
+#         data = {
+#         "doc":"자동차 경주" # 문자열 1줄로 요청
+#         ,"imageId":"4" # 이미지 url 뒤에 붙는 숫자값
+#         ,"modelId":"1"
+#             }
+#         json_data = json.dumps(data)
+#         response = requests.post(url, data=json_data, headers={'Content-Type': 'application/json'})
+#         if response.ok :
+#             return JsonResponse(data=response.text, safe=True, status=200)
+#         else :
+#             print('error')
+#     # # print(data)
+
+#     # # return render(request, 'post_detail.html', {'data': data})
+#     # # data = connet_model()
+#     # JsonResponse(data=data, safe=True, status=200)
