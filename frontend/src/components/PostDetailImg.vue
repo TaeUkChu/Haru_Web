@@ -28,9 +28,6 @@
                   label="해시태그를 골라주세요 (1~3)"
                   multiple
                 ></v-autocomplete>
-                <v-btn color="orange darken-2" dark @click="back">
-                  <v-icon dark left>arrow_back</v-icon>Back
-                </v-btn>
               </v-row>
             </v-col>
           </div>
@@ -41,6 +38,11 @@
       <v-col cols="12" sm="4" lg="3">
         <v-card class="pa-2" tile>
           <h1>안녕 테스트</h1>
+          <div>
+            <v-btn color="orange darken-2" dark @click="back">
+              <v-icon dark left>arrow_back</v-icon>돌아가기
+            </v-btn>
+          </div>
         </v-card>
       </v-col>
     </v-row>
@@ -73,7 +75,7 @@ export default {
         .then((res) => {
           console.log("POST DETAIL Img GET RES", res);
           this.post = res.data;
-          // this.url = `http://116.38.220.14/static/imges/${postId}.png`;
+          this.url = `http://116.38.220.14/static/imges/${postId}.png`;
           // http://116.38.220.14/imgview/4.png
           // http://116.38.220.14/static/imges/4.png
         })

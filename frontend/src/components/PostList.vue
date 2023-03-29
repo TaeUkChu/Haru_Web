@@ -47,36 +47,48 @@
 
         <v-card-text>
           <v-form id="post-form" ref="postForm">
-            <v-text-field
+            <!-- <v-text-field
               label="ID"
               name="id"
               v-model="editedItem.id"
               readonly
-            ></v-text-field>
+            ></v-text-field> -->
             <v-text-field
-              label="TITLE"
+              label="일기 제목"
               name="title"
               v-model="editedItem.title"
+              :rules="rules"
+              hide-details="auto"
             ></v-text-field>
-            <v-text-field
+            <!-- <v-text-field
               label="DESCRIPTION"
               name="description"
               v-model="editedItem.description"
+            ></v-text-field> -->
+            <v-text-field
+              label="오늘의 날씨"
+              name="weather"
+              v-model="editedItem.weather"
+            ></v-text-field>
+            <v-text-field
+              label="오늘의 기분"
+              name="emotion"
+              v-model="editedItem.emotion"
             ></v-text-field>
             <v-textarea
               outlined
-              label="CONTENT"
+              label="일기 내용"
               name="content"
               v-model="editedItem.content"
             ></v-textarea>
-            <v-text-field
+            <!-- <v-text-field
               label="OWNER"
               name="owner"
               v-model="editedItem.owner"
               readonly
-            ></v-text-field>
+            ></v-text-field> -->
             <v-text-field
-              label="TAGS"
+              label="태 그"
               name="tags"
               v-model="editedItem.tags"
             ></v-text-field>
@@ -109,6 +121,8 @@ export default {
       },
       { text: "제 목", value: "title" },
       { text: "요 약 (날씨, 기분)", value: "description" },
+      { text: "날 씨", value: "weather" },
+      { text: "기 분", value: "emotion" },
       { text: "수정일", value: "modify_dt" },
       { text: "작성자", value: "owner" },
       { text: "Actions", value: "actions", sortable: false },
@@ -119,6 +133,11 @@ export default {
     editedItem: {},
     actionKind: "",
     me: { username: "Anonymous" },
+
+    rules: [
+      (value) => !!value || "필수 입력 사항입니다.",
+      // value => (value && value.length >= 3) || 'Min 3 characters',
+    ],
   }),
 
   computed: {

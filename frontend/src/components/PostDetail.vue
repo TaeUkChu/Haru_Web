@@ -40,8 +40,9 @@
                 ></v-autocomplete>
               </v-row>
               <v-img :src="url"></v-img>
-              <v-row
-                ><v-btn
+              <v-row>
+                <h3>[그림 생성 페이지로 이동]</h3>
+                <v-btn
                   class="mx-2"
                   fab
                   dark
@@ -50,8 +51,7 @@
                   @click="serverPageImg()"
                   ><v-icon dark> mdi-pencil </v-icon></v-btn
                 >
-                <h3>[그림 생성 페이지로 이동]</h3></v-row
-              >
+              </v-row>
             </v-col>
           </div>
           <img :src="testimage" height="100px" width="150px" />

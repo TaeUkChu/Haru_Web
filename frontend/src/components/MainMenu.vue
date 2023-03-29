@@ -48,11 +48,12 @@
     <v-app-bar app clipped-left color="indigo" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Vue.js - Django Web Programming</v-toolbar-title>
+      <v-toolbar-title id="menutitle">하루 자국</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn text href="/">Home</v-btn>
+      <v-btn text href="/blog/post/input/">일기 쓰기</v-btn>
       <v-btn text href="/blog/post/list/">일기 게시글 리스트</v-btn>
       <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn>
       <v-btn text href="/admin/">관리자 페이지</v-btn>
@@ -142,6 +143,7 @@
               name="password1"
               prepend-icon="mdi-lock"
               type="password"
+              :rules="rules"
             ></v-text-field>
             <v-text-field
               label="Password again"
@@ -217,6 +219,10 @@ export default {
       pwdchg: false,
     },
     me: { username: "Anonymous" },
+    rules: [
+      (value) => !!value || "필수 입력 사항입니다.",
+      (value) => (value && value.length >= 8) || "8자리 이상 입력해주세요",
+    ],
   }),
 
   watch: {
@@ -353,4 +359,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap");
+#menutitle {
+  font-family: "Black And White Picture", sans-serif;
+}
+</style>

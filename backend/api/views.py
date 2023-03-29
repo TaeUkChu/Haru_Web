@@ -43,7 +43,6 @@ class ApiPostDV(BaseDetailView):
 
         return JsonResponse(data=post, safe=True, status=200)
 
-
 class ApiPostImgDV(BaseDetailView):
     model = Post
 
@@ -57,6 +56,23 @@ class ApiPostImgDV(BaseDetailView):
             return JsonResponse(data=post, safe=True, status=200)
         else :
             return JsonResponse(data={}, safe=True, status=404)
+
+class ApiInputView(BaseCreateView):
+    # model = get_user_model()
+    # fields = '__all__'
+    form_class = MyUserCreationForm
+
+    def form_valid(self, form):
+        self.object = form.save() #바로 저장하겠다.
+        userDict = {
+            'id': self.object.id,
+            'username': self.object.username,
+        }
+        return JsonResponse(data=userDict, safe=True, status=201)
+
+    def form_invalid(self, form):
+        return JsonResponse(data=form.errors, safe=True, status=400)
+
 class ApiTagCloudLV(BaseListView):
     # model = Tag
     queryset = Tag.objects.annotate(count=Count('post'))
@@ -98,7 +114,7 @@ class ApiRegisterView(BaseCreateView):
     form_class = MyUserCreationForm
 
     def form_valid(self, form):
-        self.object = form.save()
+        self.object = form.save() #바로 저장하겠다.
         userDict = {
             'id': self.object.id,
             'username': self.object.username,
