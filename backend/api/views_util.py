@@ -1,3 +1,5 @@
+# import server_url
+
 def obj_to_post(obj):
     post = dict(vars(obj))
 
@@ -95,6 +97,7 @@ def to_hashtag_list(content):
 
 import requests
 def connect_model(imageId, doc):
+    # url = server_url.url
     url = 'http://116.38.220.14/resultAPI' # 고정
     data = {
         "doc":doc # 문자열 1줄로 요청

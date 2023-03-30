@@ -7,7 +7,7 @@
         <p class="text-center Text" id="HomeText">하루 자국</p>
       </v-row>
     </div>
-
+    <!-- 첫 번째 화면 : 액자 테이블-->
     <v-row class="fill-height" align="center" justify="center">
       <template>
         <v-col v-for="(item, index) in items" :key="index" cols="6">
@@ -52,8 +52,8 @@
     <!-- 관련 링크 https://www.npmjs.com/package/vue-responsive-video-background-player -->
     <!-- :src="require(`@/assets/videos/비오는날2.mp4`)" -->
 
+    <!-- 두 번째 화면 : 문구 -->
     <div>
-      <h1>영상이 나옵니다.</h1>
       <div class="sub-container">
         <div id="rain-gif">
           <div class="Text content-gif">

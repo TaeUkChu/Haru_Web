@@ -1,5 +1,49 @@
 <template>
   <v-container>
+    <!-- 사진 일기장 리스트 -->
+    <div>
+      <v-row class="fill-height" align="center" justify="center">
+        <template>
+          <v-col v-for="(item, index) in items" :key="index" cols="6">
+            <v-hover v-slot="{ hover }">
+              <v-card
+                :elevation="hover ? 12 : 2"
+                :class="{ 'on-hover': hover }"
+              >
+                <v-img :src="item.img" height="225px">
+                  <v-card-title class="text-h6 white--text">
+                    <v-row
+                      class="fill-height flex-column"
+                      justify="space-between"
+                    >
+                      <p class="mt-4 subheading text-left">
+                        {{ item.title }}
+                      </p>
+
+                      <div>
+                        <p
+                          id="content"
+                          class="ma-10 font-weight-bold font-italic text-center"
+                        >
+                          {{ item.text }}
+                        </p>
+                        <p
+                          id="tag"
+                          class="text-caption font-weight-medium font-italic text-bottom"
+                        >
+                          {{ item.tag }}
+                        </p>
+                      </div>
+                    </v-row>
+                  </v-card-title>
+                </v-img>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </template>
+      </v-row>
+    </div>
+    <!-- 모든 일기장 리스트 -->
     <v-data-table
       :headers="headers"
       :items="posts"
@@ -39,6 +83,7 @@
       </template>
     </v-data-table>
 
+    <!-- 일기 세부 작성 다이얼로그 -->
     <v-dialog v-model="dialog" max-width="800px">
       <v-card>
         <v-card-title>
@@ -134,6 +179,7 @@ export default {
         sortable: false,
         value: "id",
       },
+      {text: "작성일", value: "create_dt"}
       { text: "제 목", value: "title" },
       { text: "요 약", value: "description" },
       { text: "날 씨", value: "weather" },
@@ -155,12 +201,28 @@ export default {
       (value) => !!value || "필수 입력 사항입니다.",
       // value => (value && value.length >= 3) || 'Min 3 characters',
     ],
+    // 사진 게시글 아이템
+    items: [
+      {
+        title: "2023.03.21",
+        text: "대학 축제에 나훈아가 와서 공연했어! 대박 존잼!!!!",
+        tag: "# 축제 # 나훈아 # 공연.",
+        img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
+      },
+      {
+        title: "2023.03.20",
+        text: `티켓이 생겨서 처음으로 밴드 보러 갔어. 일렉기타 완전 좋았어. 행복해`,
+        tag: "# 밴드, # 행복 # 일렉기타",
+        img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
+      },
+    ],
+    transparent: "rgba(255, 255, 255, 0)",
   }),
 
   computed: {
     formTitle() {
       // return this.editedIndex === -1 ? "Create Item" : "Update Item";
-      if (this.actionKind === "create") return "Create Item";
+      if (this.actionKind === "create") return "일기 작성";
       else return "Update Item";
     },
   },
@@ -290,5 +352,12 @@ export default {
 <style scoped>
 .v-data-table >>> tbody > tr {
   cursor: pointer;
+}
+.v-card {
+  transition: opacity 0.4s ease-in-out;
+}
+
+.v-card:not(.on-hover) {
+  opacity: 0.6;
 }
 </style>

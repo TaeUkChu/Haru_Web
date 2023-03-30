@@ -21,3 +21,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+/home/user/VueDjango-siljeon/VueDjangoWebpack1/backend/api/server_url.py
