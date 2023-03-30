@@ -16,7 +16,8 @@
           <div>
             <tag_strong>HASHTAGS:</tag_strong>
             <v-col>
-              <v-row>
+              <!-- keybert -->
+              <!-- <v-row>
                 <v-autocomplete
                   v-model="values"
                   v-if="post.hashtags"
@@ -28,7 +29,7 @@
                   label="해시태그를 골라주세요 (1~3)"
                   multiple
                 ></v-autocomplete>
-              </v-row>
+              </v-row> -->
             </v-col>
           </div>
           <!-- <img src="/static/imges/4.png"> -->
@@ -37,10 +38,12 @@
 
       <v-col cols="12" sm="4" lg="3">
         <v-card class="pa-2" tile>
-          <h1>안녕 테스트</h1>
           <div>
+            <h2>이미지 재생성</h2>
+
+            <h2>뒤로가기</h2>
             <v-btn color="orange darken-2" dark @click="back">
-              <v-icon dark left>arrow_back</v-icon>돌아가기
+              <v-icon dark left>arrow_back</v-icon>
             </v-btn>
           </div>
         </v-card>

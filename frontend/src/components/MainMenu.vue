@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped expend-on-hover>
       <v-list>
         <v-list-item class="px-2">
           <v-icon large center>mdi-account</v-icon>
@@ -45,17 +45,25 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left color="indigo" dark>
+    <v-app-bar app clipped-left color="light-green-darken-1" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
+      <!-- <v-toolbar-side-icon>
+        <v-img
+          class="mr-3"
+          src="@/assets/images/haru_move.gif"
+          height="30px"
+          width="40px"
+        >
+        </v-img>
+      </v-toolbar-side-icon> -->
       <v-toolbar-title id="menutitle">하루 자국</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn text href="/">Home</v-btn>
-      <v-btn text href="/blog/post/input/">일기 쓰기</v-btn>
-      <v-btn text href="/blog/post/list/">일기 게시글 리스트</v-btn>
-      <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn>
+      <v-btn text href="/blog/post/list/">내 일기 보기</v-btn>
+      <v-btn text href="/blog/post/list/">공유 일기 보기</v-btn>
+      <!-- <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn> -->
       <v-btn text href="/admin/">관리자 페이지</v-btn>
       <!-- <v-btn text>/</v-btn>
       <v-btn text href="/post_list.html">PostList</v-btn>
@@ -74,18 +82,18 @@
         <v-list>
           <template v-if="me.username === 'Anonymous'">
             <v-list-item @click="dialogOpen('login')">
-              <v-list-item-title>Login</v-list-item-title>
+              <v-list-item-title>로그인</v-list-item-title>
             </v-list-item>
             <v-list-item @click="dialogOpen('register')">
-              <v-list-item-title>Register</v-list-item-title>
+              <v-list-item-title>회원가입</v-list-item-title>
             </v-list-item>
           </template>
           <template v-else>
             <v-list-item @click="logout">
-              <v-list-item-title>Logout</v-list-item-title>
+              <v-list-item-title>로그아웃</v-list-item-title>
             </v-list-item>
             <v-list-item @click="dialogOpen('pwdchg')">
-              <v-list-item-title>Password change</v-list-item-title>
+              <v-list-item-title>비밀번호 변경</v-list-item-title>
             </v-list-item>
           </template>
         </v-list>
@@ -96,7 +104,7 @@
     <v-dialog v-model="dialog.login" max-width="600">
       <v-card class="elevation-12">
         <v-toolbar color="primary" dark flat>
-          <v-toolbar-title>Login form</v-toolbar-title>
+          <v-toolbar-title>로그인</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-form id="login-form" ref="loginForm">
@@ -116,9 +124,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="grey" @click="cancel('login')">Cancel</v-btn>
+          <v-btn text color="grey" @click="cancel('login')">취소</v-btn>
           <v-btn color="primary" class="mr-5" @click="save('login')"
-            >Login</v-btn
+            >로그인하기</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -128,7 +136,7 @@
     <v-dialog v-model="dialog.register" max-width="600">
       <v-card class="elevation-12">
         <v-toolbar color="success" dark flat>
-          <v-toolbar-title>Register form</v-toolbar-title>
+          <v-toolbar-title>회원 가입</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-form id="register-form" ref="registerForm">
@@ -143,6 +151,7 @@
               name="password1"
               prepend-icon="mdi-lock"
               type="password"
+              hint="너무 흔한 비밀번호는 안되요. (예시:asdf1234)"
               :rules="rules"
             ></v-text-field>
             <v-text-field
@@ -155,9 +164,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="grey" @click="cancel('register')">Cancel</v-btn>
+          <v-btn text color="grey" @click="cancel('register')">취소</v-btn>
           <v-btn color="success" class="mr-5" @click="save('register')"
-            >Register</v-btn
+            >등록하기</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -167,7 +176,7 @@
     <v-dialog v-model="dialog.pwdchg" max-width="600">
       <v-card class="elevation-12">
         <v-toolbar color="warning" dark flat>
-          <v-toolbar-title>Password change form</v-toolbar-title>
+          <v-toolbar-title>비밀번호 변경</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
           <v-form id="pwdchg-form" ref="pwdchgForm">
@@ -193,9 +202,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="grey" @click="cancel('pwdchg')">Cancel</v-btn>
+          <v-btn text color="grey" @click="cancel('pwdchg')">취소</v-btn>
           <v-btn color="warning" class="mr-5" @click="save('pwdchg')"
-            >Password change</v-btn
+            >비밀번호 변경하기</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -221,7 +230,8 @@ export default {
     me: { username: "Anonymous" },
     rules: [
       (value) => !!value || "필수 입력 사항입니다.",
-      (value) => (value && value.length >= 8) || "8자리 이상 입력해주세요",
+      (value) => (value && value.length >= 8) || "8자리 이상 입력해주세요.",
+      (value) => (value && isNaN(value)) || "숫자와 문자를 섞어주세요.",
     ],
   }),
 
@@ -292,7 +302,7 @@ export default {
         })
         .catch((err) => {
           console.log("LOGIN POST ERR.RESPONSE", err.response);
-          alert("login NOK");
+          alert("로그인 실패");
         });
     },
 
@@ -303,12 +313,12 @@ export default {
         .post("/api/register/", postData)
         .then((res) => {
           console.log("REGISTER POST RES", res);
-          alert(`user ${res.data.username} created OK`);
+          alert(`user ${res.data.username} 생성 완료`);
           // this.me = res.data;
         })
         .catch((err) => {
           console.log("REGISTER POST ERR.RESPONSE", err.response);
-          alert("register NOK");
+          alert("회원가입 실패");
         });
     },
 
@@ -318,12 +328,12 @@ export default {
         .get("/api/logout/")
         .then((res) => {
           console.log("LOGOUT GET RES", res);
-          alert(`user ${this.me.username} logout OK`);
+          alert(`user ${this.me.username} 로그아웃 완료`);
           this.me = { username: "Anonymous" };
         })
         .catch((err) => {
           console.log("LOGOUT GET ERR.RESPONSE", err.response);
-          alert("logout NOK");
+          alert("로그아웃 실패");
         });
     },
 
@@ -334,11 +344,11 @@ export default {
         .post("/api/pwdchg/", postData)
         .then((res) => {
           console.log("PWDCHG POST RES", res);
-          alert(`user ${this.me.username} password change OK`);
+          alert(`user ${this.me.username} 패스워드 변경 완료`);
         })
         .catch((err) => {
           console.log("PWDCHG POST ERR.RESPONSE", err.response);
-          alert("password change NOK");
+          alert("패스워드 변경 실패");
         });
     },
 

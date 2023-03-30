@@ -65,16 +65,31 @@
               name="description"
               v-model="editedItem.description"
             ></v-text-field> -->
-            <v-text-field
-              label="오늘의 날씨"
-              name="weather"
+            <v-select
               v-model="editedItem.weather"
-            ></v-text-field>
-            <v-text-field
+              :items="weather_states"
+              name="weather"
+              menu-props="auto"
+              label="오늘의 날씨"
+              hide-details
+              :prepend-icon="icon"
+              filled
+            ></v-select>
+            <!-- <v-text-field
               label="오늘의 기분"
               name="emotion"
               v-model="editedItem.emotion"
-            ></v-text-field>
+            ></v-text-field> -->
+            <v-select
+              v-model="editedItem.emotion"
+              :items="emotion_states"
+              name="emotion"
+              menu-props="auto"
+              label="오늘의 기분"
+              hide-details
+              :prepend-icon="icon"
+              filled
+            ></v-select>
             <v-textarea
               outlined
               label="일기 내용"
@@ -120,7 +135,7 @@ export default {
         value: "id",
       },
       { text: "제 목", value: "title" },
-      { text: "요 약 (날씨, 기분)", value: "description" },
+      { text: "요 약", value: "description" },
       { text: "날 씨", value: "weather" },
       { text: "기 분", value: "emotion" },
       { text: "수정일", value: "modify_dt" },
@@ -132,6 +147,8 @@ export default {
     editedIndex: -1,
     editedItem: {},
     actionKind: "",
+    weather_states: ["맑음", "비", "안개", "눈", "흐린"],
+    emotion_states: ["최고", "기쁨", "보통", "슬픔", "최악"],
     me: { username: "Anonymous" },
 
     rules: [

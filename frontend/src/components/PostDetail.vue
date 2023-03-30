@@ -104,7 +104,7 @@
 
 <script>
 import axios from "axios";
-import testImage from "@/assets/cat.png";
+import testImage from "@/assets/images/cat.png";
 
 export default {
   data: () => ({

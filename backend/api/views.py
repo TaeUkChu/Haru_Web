@@ -39,7 +39,7 @@ class ApiPostDV(BaseDetailView):
         obj = context['object']
         post = obj_to_post(obj)
         post['prev'], post['next'] = prev_next_post(obj)
-        post['hashtags'] = to_hashtag_list(obj.content)
+        #post['hashtags'] = to_hashtag_list(obj.content)
 
         return JsonResponse(data=post, safe=True, status=200)
 
@@ -50,7 +50,7 @@ class ApiPostImgDV(BaseDetailView):
         obj = context['object']
         post = obj_to_post(obj)
         post['prev'], post['next'] = prev_next_post(obj)
-        post['hashtags'] = to_hashtag_list(obj.content)
+        #post['hashtags'] = to_hashtag_list(obj.content)
         # # 이미지 불러오는 함수
         if connect_model(obj.id,obj.content) == 0:
             return JsonResponse(data=post, safe=True, status=200)

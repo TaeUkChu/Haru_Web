@@ -99,7 +99,7 @@ def connect_model(imageId, doc):
     data = {
         "doc":doc # 문자열 1줄로 요청
         ,"imageId": imageId # 이미지 url 뒤에 붙는 숫자값
-        ,"modelId":"1"
+        ,"modelId":"3"
             }
     result = requests.post(url, json=data)
     if result.ok:
