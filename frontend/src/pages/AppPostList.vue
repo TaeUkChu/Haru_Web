@@ -13,13 +13,12 @@
 </template>
 
 <script>
-import MainMenu from '../components/MainMenu.vue';
-import PostList from '../components/PostList.vue';
+import MainMenu from "../components/MainMenu.vue";
+import PostList from "../components/PostList.vue";
 
 export default {
   components: { MainMenu, PostList },
 
-  data: () => ({
-  }),
+  data: () => ({}),
 };
 </script>

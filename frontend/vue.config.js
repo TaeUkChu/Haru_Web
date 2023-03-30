@@ -58,11 +58,11 @@ module.exports = {
       minify: false,
     },
 
-    post_input: {
+    post_img_list: {
       template: "public/index.html",
-      entry: "src/pages/main_post_input.js",
-      filename: "post_input.html",
-      title: "VueDjangoPhoto/post_input.html",
+      entry: "src/pages/main_post_img_list.js",
+      filename: "post_img_list.html",
+      title: "VueDjangoPhoto/post_img_list.html",
       minify: false,
     },
 

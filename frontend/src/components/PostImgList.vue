@@ -1,44 +1,109 @@
 <template>
   <v-container>
-    <!-- 모든 일기장 리스트 -->
-    <v-data-table
-      :headers="headers"
-      :items="posts"
-      sort-by="id"
-      sort-desc="true"
-      class="elevation-1"
-      :items-per-page="10"
-      @click:row="serverPage"
-    >
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title> 일기장 전체 목록 </v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            dark
-            class="mb-2"
-            @click.stop="dialogOpen('create', {})"
-            >일기 작성하기</v-btn
+    <!-- 사진 일기장 리스트 -->
+    <div>
+      <v-row class="fill-height" align="center" justify="center">
+        <template>
+          <span v-if="tagname" class="body-1 font-italic ml-3"
+            >({{ tagname }}로 태그된 일기)</span
           >
-        </v-toolbar>
-      </template>
+          <v-col
+            v-for="item in posts.slice().reverse()"
+            :key="item.id"
+            cols="6"
+          >
+            <h2>{{ item.id }} | {{ item.owner }}</h2>
+            <h1>{{ item.create_dt }}</h1>
+            <v-hover v-slot="{ hover }">
+              <v-card
+                id="image_card"
+                @click="serverPage(item)"
+                :elevation="hover ? 12 : 2"
+                :class="{ 'on-hover': hover }"
+              >
+                <!-- :src="
+                    require(`http://116.38.220.14/static/imges/${postId}.png`)
+                  " -->
+                <v-img
+                  v-if="item.check_img"
+                  :src="`http://116.38.220.14/static/imges/${item.id}.png`"
+                  alt="이미지가 아직 생성되지 않았습니다."
+                  height="225px"
+                >
+                  <v-card-title class="text-h6 white--text">
+                    <v-row
+                      class="fill-height flex-column"
+                      justify="space-between"
+                    >
+                      <p class="mt-4 subheading text-left">
+                        {{ item.create_dt }}
+                      </p>
 
-      <template v-slot:[`item.actions`]="{ item }">
-        <!-- <template v-slot:item.actions="{ item }"> -->
-        <v-icon small class="mr-2" @click.stop="dialogOpen('update', item)"
-          >mdi-pencil</v-icon
-        >
-        <v-icon small @click.stop="deletePost(item)">mdi-delete</v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="fetchPostList">Reset</v-btn>
-      </template>
-    </v-data-table>
+                      <div>
+                        <p
+                          id="content"
+                          class="ma-10 font-weight-bold font-italic text-center"
+                        >
+                          {{ item.title }}
+                        </p>
+                        <p
+                          id="tag"
+                          class="text-caption font-weight-medium font-italic text-bottom"
+                        >
+                          {{ item.tags }}
+                        </p>
+                      </div>
+                    </v-row>
+                  </v-card-title>
+                </v-img>
+                <v-img v-else :src="default_url" height="225px">
+                  <v-card-title class="text-h6 white--text">
+                    <v-row
+                      class="fill-height flex-column"
+                      justify="space-between"
+                    >
+                      <p class="mt-4 subheading text-left">
+                        {{ item.create_dt }}
+                      </p>
+
+                      <div>
+                        <p
+                          id="content"
+                          class="ma-10 font-weight-bold font-italic text-center"
+                        >
+                          {{ item.title }}
+                        </p>
+                        <p
+                          id="tag"
+                          class="text-caption font-weight-medium font-italic text-bottom"
+                        >
+                          {{ item.tags }}
+                        </p>
+                      </div>
+                    </v-row>
+                  </v-card-title>
+                </v-img>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </template>
+      </v-row>
+    </div>
+    <div id="pencil">
+      <v-btn
+        class="mx-2"
+        fab
+        dark
+        large
+        color="cyan"
+        @click.stop="dialogOpen('create', {})"
+        ><v-icon dark> mdi-pencil </v-icon></v-btn
+      >
+      <p>일기 쓰기</p>
+    </div>
     <!-- 일기 세부 작성 다이얼로그 -->
     <v-dialog v-model="dialog" max-width="800px">
-      <v-card>
+      <v-card class="dialog">
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
         </v-card-title>
@@ -107,6 +172,7 @@
             ></v-text-field>
           </v-form>
         </v-card-text>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="cancel">Cancel</v-btn>
@@ -120,6 +186,7 @@
 <script>
 import axios from "axios";
 import EventBus from "./event_bus";
+import Failimg from "@/assets/images/fail.png";
 
 export default {
   data: () => ({
@@ -138,6 +205,7 @@ export default {
       { text: "기 분", value: "emotion" },
       { text: "수정일", value: "modify_dt" },
       { text: "작성자", value: "owner" },
+      { text: "이미지 체크", value: "check_img" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     posts: [],
@@ -148,11 +216,13 @@ export default {
     weather_states: ["맑음", "비", "안개", "눈", "흐린"],
     emotion_states: ["최고", "기쁨", "보통", "슬픔", "최악"],
     me: { username: "Anonymous" },
+    default_url: Failimg,
 
     rules: [
       (value) => !!value || "필수 입력 사항입니다.",
       // value => (value && value.length >= 3) || 'Min 3 characters',
     ],
+    transparent: "rgba(255, 255, 255, 0)",
   }),
 
   computed: {
@@ -165,6 +235,7 @@ export default {
 
   created() {
     const params = new URL(location).searchParams;
+    // const paramTag = params.get('tagname');
     this.tagname = params.get("tagname");
     this.fetchPostList();
 
@@ -263,11 +334,11 @@ export default {
     deletePost(item) {
       console.log("deletePost()...", item);
       if (this.me.username === "Anonymous") {
-        alert("로그인 해주세요!");
+        alert("Please login first !");
         return;
       }
 
-      if (!confirm("삭제하시겠습니까?")) return;
+      if (!confirm("Are you sure to delete ?")) return;
       axios
         .delete(`/api/post/${item.id}/delete/`)
         .then((res) => {
@@ -287,5 +358,33 @@ export default {
 <style scoped>
 .v-data-table >>> tbody > tr {
   cursor: pointer;
+}
+#v-image_card {
+  transition: opacity 0.4s ease-in-out;
+}
+
+#v-image_card:not(.on-hover) {
+  opacity: 0.6;
+}
+#content {
+  font-size: 30px;
+}
+
+#tag {
+  background-color: black;
+  bottom: 30px;
+  position: relative;
+  text-align: center;
+}
+#pencil {
+  position: fixed;
+  text-align: center;
+  bottom: 100px;
+  right: 100px;
+  color: "cyan";
+}
+
+.dialog {
+  transition: opacity 0.4s ease-in-out;
 }
 </style>

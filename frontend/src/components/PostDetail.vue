@@ -3,56 +3,45 @@
     <v-row align="center" justify="center">
       <v-col cols="12" lg="10">
         <h1>{{ post.title }}</h1>
-        <p>{{ post.modify_dt }}, written by {{ post.owner }}</p>
+        <p class="subtitle">{{ post.owner }} | {{ post.modify_dt }}</p>
+        <div>
+          <v-chip
+            class="ma-2 my-hover"
+            outlined
+            v-for="(tag, index) in post.tags"
+            :key="index"
+            @click="serverPage(tag)"
+            >{{ tag }}</v-chip
+          >
+        </div>
       </v-col>
     </v-row>
 
     <v-row align="start" justify="center">
       <v-col cols="12" sm="8" lg="7">
         <v-card class="pa-2" outlined tile>
-          <p style="white-space: pre-wrap">{{ post.content }}</p>
-          <div>
-            <tag_strong>TAGS:</tag_strong>
-            <v-chip
-              class="ma-2 my-hover"
-              outlined
-              v-for="(tag, index) in post.tags"
-              :key="index"
-              @click="serverPage(tag)"
-              >{{ tag }}</v-chip
-            >
-          </div>
+          <p class="content" style="white-space: pre-wrap">
+            {{ post.content }}
+          </p>
           <br />
-          <div>
-            <v-col>
+          <!-- 이미지 들어가는 부분 -->
+          <v-col class="image-container">
+            <v-img id="image" :src="url"></v-img>
+            <div id="pencil-container">
               <v-row>
-                <v-autocomplete
-                  v-model="values"
-                  v-if="post.hashtags"
-                  :items="post.hashtags"
-                  outlined
-                  dense
-                  chips
-                  small-chips
-                  label="해시태그를 골라주세요 (1~3)"
-                  multiple
-                ></v-autocomplete>
-              </v-row>
-              <v-img :src="url"></v-img>
-              <v-row id="pencil-container">
                 <v-btn
                   class="mx-2"
                   fab
                   dark
                   large
-                  color="cyan"
+                  color="purple"
                   @click="serverPageImg()"
                   ><v-icon dark> mdi-pencil </v-icon></v-btn
                 >
               </v-row>
-            </v-col>
-          </div>
-          <!-- <img src="/static/imges/4.png"> -->
+              <p>이미지 새로 만들기</p>
+            </div>
+          </v-col>
         </v-card>
       </v-col>
 
@@ -159,7 +148,7 @@ export default {
 
     serverPage(tagname) {
       console.log("serverPage()...", tagname);
-      location.href = `/blog/post/list/?tagname=${tagname}`;
+      location.href = `/blog/post/img/list/?tagname=${tagname}`;
       // location.href = `/post_list.html?tagname=${tagname}`;
     },
     serverPageImg() {
@@ -183,5 +172,22 @@ export default {
 #pencil-container {
   display: flex;
   justify-content: flex-end;
+  text-align: center;
+  color: purple;
+  margin: 10%;
+}
+.subtitle {
+  color: gray;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-image: url("@/assets/images/note.png");
+}
+#image {
+  margin-left: 15%;
+  margin-top: 15%;
+  justify-content: center;
 }
 </style>

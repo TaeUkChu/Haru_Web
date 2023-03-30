@@ -23,5 +23,5 @@ class PostDetailTV(TemplateView):
 class PostDetailImgTV(TemplateView):
     template_name = 'blog/post_detail_img.html'
 
-class PostInutTV(TemplateView):
-    template_name = 'blog/post_input.html'
+class PostImgListTV(TemplateView):
+    template_name = 'blog/post_img_list.html'

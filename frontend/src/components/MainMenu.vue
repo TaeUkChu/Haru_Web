@@ -22,7 +22,7 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item link>
+        <v-list-item :link="`/blog/post/list/?username=${me.username}`">
           <v-list-item-icon>
             <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>
@@ -61,8 +61,8 @@
       <v-spacer></v-spacer>
 
       <v-btn text href="/">Home</v-btn>
-      <v-btn text href="/blog/post/list/">내 일기 보기</v-btn>
-      <v-btn text href="/blog/post/input/">공유 일기 보기</v-btn>
+      <v-btn text href="/blog/post/img/list/">그림 일기 보기</v-btn>
+      <v-btn text href="/blog/post/list/">리스트 일기 보기</v-btn>
       <!-- <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn> -->
       <v-btn text href="/admin/">관리자 페이지</v-btn>
       <!-- <v-btn text>/</v-btn>
@@ -107,7 +107,11 @@
           <v-toolbar-title>로그인</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form id="login-form" ref="loginForm">
+          <v-form
+            id="login-form"
+            ref="loginForm"
+            v-on:keyup.enter="save('login')"
+          >
             <v-text-field
               label="Username"
               name="username"
@@ -139,7 +143,11 @@
           <v-toolbar-title>회원 가입</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form id="register-form" ref="registerForm">
+          <v-form
+            id="register-form"
+            ref="registerForm"
+            v-on:submit.prevent="save('login')"
+          >
             <v-text-field
               label="Username"
               name="username"
@@ -179,7 +187,11 @@
           <v-toolbar-title>비밀번호 변경</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-          <v-form id="pwdchg-form" ref="pwdchgForm">
+          <v-form
+            id="pwdchg-form"
+            ref="pwdchgForm"
+            v-on:submit.prevent="save('login')"
+          >
             <v-text-field
               label="Old password"
               name="old_password"

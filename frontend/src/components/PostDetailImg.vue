@@ -2,21 +2,42 @@
   <v-container>
     <v-row align="center" justify="center">
       <v-col cols="12" lg="10">
-        <h1>이미지 생성 페이지입니다.</h1>
+        <h3>[이미지 생성 페이지입니다.]</h3>
         <h1>{{ post.title }}</h1>
-        <p>{{ post.modify_dt }}, written by {{ post.owner }}</p>
+        <p class="subtitle">{{ post.owner }} | {{ post.modify_dt }}</p>
+        <div>
+          <v-chip
+            class="ma-2 my-hover"
+            outlined
+            v-for="(tag, index) in post.tags"
+            :key="index"
+            @click="serverPage(tag)"
+            >{{ tag }}</v-chip
+          >
+        </div>
       </v-col>
     </v-row>
 
     <v-row align="start" justify="center">
       <v-col cols="12" sm="8" lg="7">
         <v-card class="pa-2" outlined tile>
+          <div class="progress-circle" v-if="isloading">
+            <v-progress-circular
+              :size="100"
+              :width="10"
+              color="purple"
+              indeterminate
+            ></v-progress-circular>
+            <br />
+          </div>
+          <p id="progress-content">이미지 생성 중입니다...</p>
           <v-img img :src="url"></v-img>
           <br />
-          <div>
+          <!-- keybert -->
+          <!-- <div>
             <v-col>
-              <!-- keybert -->
-              <!-- <v-row>
+
+               <v-row>
                 <v-autocomplete
                   v-model="values"
                   v-if="post.hashtags"
@@ -28,9 +49,9 @@
                   label="해시태그를 골라주세요 (1~3)"
                   multiple
                 ></v-autocomplete>
-              </v-row> -->
+              </v-row>
             </v-col>
-          </div>
+          </div> -->
           <!-- <img src="/static/imges/4.png"> -->
         </v-card>
       </v-col>
@@ -38,11 +59,11 @@
       <v-col cols="12" sm="4" lg="3">
         <v-card class="pa-2" tile>
           <div>
-            <h2>이미지 재생성은 새로고침 부탁드립니다.</h2>
+            <p>이미지 재생성은 새로고침 부탁드립니다.</p>
 
             <h2>뒤로가기</h2>
-            <v-btn color="orange darken-2" dark @click="back">
-              <v-icon dark left>뒤로가기</v-icon>
+            <v-btn class="ma-2" color="orange darken-2" dark @click="back">
+              <v-icon dark left> mdi-arrow-left </v-icon>Back
             </v-btn>
           </div>
         </v-card>
@@ -61,6 +82,7 @@ export default {
     values: [],
     tag_str: "",
     url: "",
+    isloading: true,
   }),
 
   created() {
@@ -77,6 +99,7 @@ export default {
         .then((res) => {
           console.log("POST DETAIL Img GET RES", res);
           this.post = res.data;
+          this.isloading = false;
           this.url = `http://116.38.220.14/static/imges/${postId}.png`;
           // http://116.38.220.14/imgview/4.png
           // http://116.38.220.14/static/imges/4.png
@@ -105,7 +128,19 @@ export default {
   cursor: pointer;
   font-style: bold;
 }
-.text-center {
+/* .text-center {
   color: DarkCyan;
+} */
+.progress-circle {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.subtitle {
+  color: gray;
+}
+#progress-content {
+  text-align: center;
+  justify-content: center;
 }
 </style>

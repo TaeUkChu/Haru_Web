@@ -13,7 +13,7 @@ from taggit.models import Tag
 from blog.models import Post
 from accounts.forms import MyUserCreationForm
 from accounts.views import MyLoginRequiredMixin, OwnerOnlyMixin
-from api.views_util import connect_model, obj_to_post, prev_next_post, make_tag_cloud, to_hashtag_list
+from api.views_util import connect_model, obj_to_post, prev_next_post, make_tag_cloud
 
 class ApiPostLV(BaseListView):
     # model = Post

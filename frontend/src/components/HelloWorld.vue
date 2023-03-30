@@ -8,6 +8,53 @@
       </v-row>
     </div>
     <!-- 첫 번째 화면 : 액자 테이블-->
+
+    <!-- 비디오 플레이어 -->
+    <!-- 관련 링크 https://www.npmjs.com/package/vue-responsive-video-background-player -->
+    <!-- :src="require(`@/assets/videos/비오는날2.mp4`)" -->
+
+    <!-- 두 번째 화면 : 문구 -->
+    <div>
+      <div class="sub-container">
+        <div id="rain-gif">
+          <div class="Text content-gif">
+            <br />
+            <p>몸도 마음도 지친 하루…</p>
+            <br />
+            <p>하루 하루 있었던 일을 기록하고 싶지만</p>
+            <br />
+            <p>펜 하나 까딱할 힘도 없을 때</p>
+            <br />
+            <p>침대에 누워 오늘 하루 있었던 일들을</p>
+            <p>하루자국에이야기해주세요</p>
+            <br />
+            <p>하루 자국이 한편의 그림일기로 만들어</p>
+            <p>드릴게요.</p>
+          </div>
+        </div>
+      </div>
+      <!-- <video-background
+        :src="require(`@/assets/videos/비오는날2.mp4`)"
+        :poster="require(`@/assets/images/cat.png`)"
+        :sources="[
+          { src: '@/assets/videos/비오는날2.mp4', res: 991, autoplay: true },
+          {
+            src: '@/assets/videos/하루자국_intro.mp4',
+            res: 575,
+            autoplay: true,
+            poster: '@/assets/images/cat.png',
+          },
+        ]"
+        style="max-height: 400px; height: 100vh"
+      >
+        <h1 style="color: white">Hello welcome!</h1>
+      </video-background> -->
+    </div>
+    <br />
+    <br />
+    <div class="sub-container">
+      <div class="logo_img_foot"></div>
+    </div>
     <v-row class="fill-height" align="center" justify="center">
       <template>
         <v-col v-for="(item, index) in items" :key="index" cols="6">
@@ -45,49 +92,6 @@
         </v-col>
       </template>
     </v-row>
-    <div class="sub-container">
-      <div class="logo_img_foot"></div>
-    </div>
-    <!-- 비디오 플레이어 -->
-    <!-- 관련 링크 https://www.npmjs.com/package/vue-responsive-video-background-player -->
-    <!-- :src="require(`@/assets/videos/비오는날2.mp4`)" -->
-
-    <!-- 두 번째 화면 : 문구 -->
-    <div>
-      <div class="sub-container">
-        <div id="rain-gif">
-          <div class="Text content-gif">
-            <br />
-            <p>몸도 마음도 지친 하루…</p>
-            <br />
-            <p>하루 하루 있었던 일을 기록하고 싶지만</p>
-            <br />
-            <p>펜 하나 까딱할 힘도 없을 때</p>
-            <br />
-            <p>침대에 누워 오늘 하루 있었던 일들을</p>
-            <p>하루자국에이야기해주세요</p>
-            <br />
-            <p>하루 자국이 한편의 그림일기로 만들어 드릴게요.</p>
-          </div>
-        </div>
-      </div>
-      <!-- <video-background
-        :src="require(`@/assets/videos/비오는날2.mp4`)"
-        :poster="require(`@/assets/images/cat.png`)"
-        :sources="[
-          { src: '@/assets/videos/비오는날2.mp4', res: 991, autoplay: true },
-          {
-            src: '@/assets/videos/하루자국_intro.mp4',
-            res: 575,
-            autoplay: true,
-            poster: '@/assets/images/cat.png',
-          },
-        ]"
-        style="max-height: 400px; height: 100vh"
-      >
-        <h1 style="color: white">Hello welcome!</h1>
-      </video-background> -->
-    </div>
   </v-container>
 </template>
 
