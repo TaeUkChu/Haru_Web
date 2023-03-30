@@ -14,7 +14,6 @@
           <v-img img :src="url"></v-img>
           <br />
           <div>
-            <tag_strong>HASHTAGS:</tag_strong>
             <v-col>
               <!-- keybert -->
               <!-- <v-row>
@@ -39,11 +38,11 @@
       <v-col cols="12" sm="4" lg="3">
         <v-card class="pa-2" tile>
           <div>
-            <h2>이미지 재생성</h2>
+            <h2>이미지 재생성은 새로고침 부탁드립니다.</h2>
 
             <h2>뒤로가기</h2>
             <v-btn color="orange darken-2" dark @click="back">
-              <v-icon dark left>arrow_back</v-icon>
+              <v-icon dark left>뒤로가기</v-icon>
             </v-btn>
           </div>
         </v-card>

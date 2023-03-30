@@ -4,20 +4,30 @@
     <div>
       <v-row class="fill-height" align="center" justify="center">
         <template>
-          <v-col v-for="(item, index) in items" :key="index" cols="6">
+          <v-col v-for="item in posts" :key="item.id" cols="6">
+            <h1>{{ item.create_dt }}</h1>
             <v-hover v-slot="{ hover }">
               <v-card
+                @click="serverPage(item)"
                 :elevation="hover ? 12 : 2"
                 :class="{ 'on-hover': hover }"
               >
-                <v-img :src="item.img" height="225px">
+                <!-- :src="
+                    require(`http://116.38.220.14/static/imges/${postId}.png`)
+                  " -->
+                <v-img
+                  v-if="item.check_img"
+                  :src="`http://116.38.220.14/static/imges/${item.id}.png`"
+                  alt="이미지가 생성되지 않았습니다."
+                  height="225px"
+                >
                   <v-card-title class="text-h6 white--text">
                     <v-row
                       class="fill-height flex-column"
                       justify="space-between"
                     >
                       <p class="mt-4 subheading text-left">
-                        {{ item.title }}
+                        {{ item.create_dt }}
                       </p>
 
                       <div>
@@ -25,13 +35,40 @@
                           id="content"
                           class="ma-10 font-weight-bold font-italic text-center"
                         >
-                          {{ item.text }}
+                          {{ item.title }}
                         </p>
                         <p
                           id="tag"
                           class="text-caption font-weight-medium font-italic text-bottom"
                         >
-                          {{ item.tag }}
+                          {{ item.tags }}
+                        </p>
+                      </div>
+                    </v-row>
+                  </v-card-title>
+                </v-img>
+                <v-img v-else :src="default_url" height="225px">
+                  <v-card-title class="text-h6 white--text">
+                    <v-row
+                      class="fill-height flex-column"
+                      justify="space-between"
+                    >
+                      <p class="mt-4 subheading text-left">
+                        {{ item.create_dt }}
+                      </p>
+
+                      <div>
+                        <p
+                          id="content"
+                          class="ma-10 font-weight-bold font-italic text-center"
+                        >
+                          {{ item.title }}
+                        </p>
+                        <p
+                          id="tag"
+                          class="text-caption font-weight-medium font-italic text-bottom"
+                        >
+                          {{ item.tags }}
                         </p>
                       </div>
                     </v-row>
@@ -40,49 +77,19 @@
               </v-card>
             </v-hover>
           </v-col>
+          <v-btn
+            id="pencil"
+            class="mx-2"
+            fab
+            dark
+            large
+            color="cyan"
+            @click="serverPageImg()"
+            ><v-icon dark> mdi-pencil </v-icon></v-btn
+          >
         </template>
       </v-row>
     </div>
-    <!-- 모든 일기장 리스트 -->
-    <v-data-table
-      :headers="headers"
-      :items="posts"
-      sort-by="name"
-      class="elevation-1"
-      :items-per-page="10"
-      @click:row="serverPage"
-    >
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title>
-            일기장 전체 목록
-            <span v-if="tagname" class="body-1 font-italic ml-3"
-              >({{ tagname }}로 태그된 일기)</span
-            >
-          </v-toolbar-title>
-          <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            dark
-            class="mb-2"
-            @click.stop="dialogOpen('create', {})"
-            >일기 작성하기</v-btn
-          >
-        </v-toolbar>
-      </template>
-      <template v-slot:[`item.actions`]="{ item }">
-        <!-- <template v-slot:item.actions="{ item }"> -->
-        <v-icon small class="mr-2" @click.stop="dialogOpen('update', item)"
-          >mdi-pencil</v-icon
-        >
-        <v-icon small @click.stop="deletePost(item)">mdi-delete</v-icon>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="fetchPostList">Reset</v-btn>
-      </template>
-    </v-data-table>
-
     <!-- 일기 세부 작성 다이얼로그 -->
     <v-dialog v-model="dialog" max-width="800px">
       <v-card>
@@ -168,6 +175,7 @@
 <script>
 import axios from "axios";
 import EventBus from "./event_bus";
+import Failimg from "@/assets/images/fail.png";
 
 export default {
   data: () => ({
@@ -179,13 +187,14 @@ export default {
         sortable: false,
         value: "id",
       },
-      {text: "작성일", value: "create_dt"}
+      { text: "작성일", value: "create_dt" },
       { text: "제 목", value: "title" },
-      { text: "요 약", value: "description" },
+      // { text: "요 약", value: "description" },
       { text: "날 씨", value: "weather" },
       { text: "기 분", value: "emotion" },
       { text: "수정일", value: "modify_dt" },
       { text: "작성자", value: "owner" },
+      { text: "이미지 체크", value: "check_img" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     posts: [],
@@ -196,25 +205,11 @@ export default {
     weather_states: ["맑음", "비", "안개", "눈", "흐린"],
     emotion_states: ["최고", "기쁨", "보통", "슬픔", "최악"],
     me: { username: "Anonymous" },
+    default_url: Failimg,
 
     rules: [
       (value) => !!value || "필수 입력 사항입니다.",
       // value => (value && value.length >= 3) || 'Min 3 characters',
-    ],
-    // 사진 게시글 아이템
-    items: [
-      {
-        title: "2023.03.21",
-        text: "대학 축제에 나훈아가 와서 공연했어! 대박 존잼!!!!",
-        tag: "# 축제 # 나훈아 # 공연.",
-        img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
-      },
-      {
-        title: "2023.03.20",
-        text: `티켓이 생겨서 처음으로 밴드 보러 갔어. 일렉기타 완전 좋았어. 행복해`,
-        tag: "# 밴드, # 행복 # 일렉기타",
-        img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
-      },
     ],
     transparent: "rgba(255, 255, 255, 0)",
   }),
@@ -359,5 +354,19 @@ export default {
 
 .v-card:not(.on-hover) {
   opacity: 0.6;
+}
+#content {
+  font-size: 30px;
+}
+
+#tag {
+  background-color: black;
+  bottom: 30px;
+  position: relative;
+}
+#pencil {
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
 }
 </style>

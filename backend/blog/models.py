@@ -18,6 +18,7 @@ class Post(models.Model):
     modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
     tags = TaggableManager(blank=True)
     owner = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='OWNER', blank=True, null=True)
+    check_img = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

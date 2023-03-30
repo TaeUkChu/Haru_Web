@@ -62,7 +62,7 @@
 
       <v-btn text href="/">Home</v-btn>
       <v-btn text href="/blog/post/list/">내 일기 보기</v-btn>
-      <v-btn text href="/blog/post/list/">공유 일기 보기</v-btn>
+      <v-btn text href="/blog/post/input/">공유 일기 보기</v-btn>
       <!-- <v-btn text href="/text_editor/">텍스트 에디터(데모)</v-btn> -->
       <v-btn text href="/admin/">관리자 페이지</v-btn>
       <!-- <v-btn text>/</v-btn>

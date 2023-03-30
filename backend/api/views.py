@@ -53,25 +53,23 @@ class ApiPostImgDV(BaseDetailView):
         #post['hashtags'] = to_hashtag_list(obj.content)
         # # 이미지 불러오는 함수
         if connect_model(obj.id,obj.content) == 0:
+            Post(id=obj.id).check_img='True'
             return JsonResponse(data=post, safe=True, status=200)
         else :
             return JsonResponse(data={}, safe=True, status=404)
 
-class ApiInputView(BaseCreateView):
-    # model = get_user_model()
-    # fields = '__all__'
-    form_class = MyUserCreationForm
+class ApiPostImgUV(OwnerOnlyMixin, BaseUpdateView):
+    model = Post
+    fields = '__all__'
 
     def form_valid(self, form):
-        self.object = form.save() #바로 저장하겠다.
-        userDict = {
-            'id': self.object.id,
-            'username': self.object.username,
-        }
-        return JsonResponse(data=userDict, safe=True, status=201)
+        self.object = form.save()
+        post = obj_to_post(self.object)
+        return JsonResponse(data=post, safe=True, status=200)
 
     def form_invalid(self, form):
         return JsonResponse(data=form.errors, safe=True, status=400)
+
 
 class ApiTagCloudLV(BaseListView):
     # model = Tag

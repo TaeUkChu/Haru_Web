@@ -21,5 +21,5 @@ urlpatterns = [
     path('post/<int:pk>/update/', views.ApiPostUV.as_view(), name='post_update'),
     path('post/<int:pk>/delete/', views.ApiPostDelV.as_view(), name='post_delete'),
 
-    # path('post/<int:pk>/generate/', views.ApiGenerateView.as_view(), name='generate')
+    path('post/<int:pk>/img_update/', views.ApiPostImgUV.as_view(), name='img_update')
 ]

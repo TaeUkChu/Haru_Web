@@ -7,6 +7,10 @@ def obj_to_post(obj):
         post['modify_dt'] = obj.modify_dt.strftime('%Y-%m-%d %H:%M')
     else:
         post['modify_dt'] = ''
+    if obj.create_dt:
+        post['create_dt'] = obj.create_dt.strftime("%Y-%m-%d")
+    else:
+        post['create_dt'] = ''
 
     if obj.tags:
         post['tags'] = [tag.name for tag in obj.tags.all()]
@@ -17,6 +21,11 @@ def obj_to_post(obj):
         post['owner'] = obj.owner.username
     else:
         post['owner'] = 'Anonymous'
+
+    # if obj.check_img:
+    #     post['check_img'] = 'True'
+    # else:
+    #     post['check_img'] = 'False'
 
     del post['_state']
 

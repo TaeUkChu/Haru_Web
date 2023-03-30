@@ -24,7 +24,6 @@
           </div>
           <br />
           <div>
-            <tag_strong>HASHTAGS:</tag_strong>
             <v-col>
               <v-row>
                 <v-autocomplete
@@ -40,8 +39,7 @@
                 ></v-autocomplete>
               </v-row>
               <v-img :src="url"></v-img>
-              <v-row>
-                <h3>[그림 생성 페이지로 이동]</h3>
+              <v-row id="pencil-container">
                 <v-btn
                   class="mx-2"
                   fab
@@ -54,8 +52,6 @@
               </v-row>
             </v-col>
           </div>
-          <img :src="testimage" height="100px" width="150px" />
-
           <!-- <img src="/static/imges/4.png"> -->
         </v-card>
       </v-col>
@@ -104,7 +100,6 @@
 
 <script>
 import axios from "axios";
-import testImage from "@/assets/images/cat.png";
 
 export default {
   data: () => ({
@@ -112,7 +107,6 @@ export default {
     tagCloud: [],
     items: [],
     values: [],
-    testimage: testImage,
     tag_str: "",
     url: "",
   }),
@@ -185,5 +179,9 @@ export default {
 }
 .text-center {
   color: DarkCyan;
+}
+#pencil-container {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

@@ -14,7 +14,7 @@
 
 <script>
 import MainMenu from "@/components/MainMenu.vue";
-import PostInput from "../components/PostInput.vue";
+import PostInput from "@/components/PostInput.vue";
 
 export default {
   components: { MainMenu, PostInput },
