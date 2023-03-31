@@ -55,7 +55,7 @@
               label="일기 제목"
               name="title"
               v-model="editedItem.title"
-              :rules="rules"
+              :rules="title_rules"
               hide-details="auto"
             ></v-text-field>
             <!-- <v-text-field
@@ -138,6 +138,7 @@ export default {
       { text: "기 분", value: "emotion" },
       { text: "수정일", value: "modify_dt" },
       { text: "작성자", value: "owner" },
+      { text: "이미지 여부", values: "check_img" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     posts: [],
@@ -149,7 +150,7 @@ export default {
     emotion_states: ["최고", "기쁨", "보통", "슬픔", "최악"],
     me: { username: "Anonymous" },
 
-    rules: [
+    title_rules: [
       (value) => !!value || "필수 입력 사항입니다.",
       // value => (value && value.length >= 3) || 'Min 3 characters',
     ],
@@ -232,6 +233,7 @@ export default {
     createPost() {
       console.log("createPost()...");
       const postData = new FormData(document.getElementById("post-form"));
+      postData.append();
       axios
         .post("/api/post/create/", postData)
         .then((res) => {
@@ -247,6 +249,7 @@ export default {
     updatePost() {
       console.log("updatePost()...");
       const postData = new FormData(document.getElementById("post-form"));
+      postData.set("check_img", false);
       postData.set("owner", this.me.id);
       axios
         .post(`/api/post/${this.editedItem.id}/update/`, postData)

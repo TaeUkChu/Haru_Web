@@ -12,7 +12,7 @@
             :key="item.id"
             cols="6"
           >
-            <h2>{{ item.id }} | {{ item.owner }}</h2>
+            <h2>No.{{ item.id }} | {{ item.owner }}</h2>
             <h1>{{ item.create_dt }}</h1>
             <v-hover v-slot="{ hover }">
               <v-card
@@ -120,7 +120,7 @@
               label="일기 제목"
               name="title"
               v-model="editedItem.title"
-              :rules="rules"
+              :rules="title_rules"
               hide-details="auto"
             ></v-text-field>
             <!-- <v-text-field
@@ -169,6 +169,7 @@
               label="태 그"
               name="tags"
               v-model="editedItem.tags"
+              hint="콤마(,) 후 띄어쓰기를 하면 태그가 여러개 만들어져요"
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -218,7 +219,7 @@ export default {
     me: { username: "Anonymous" },
     default_url: Failimg,
 
-    rules: [
+    title_rules: [
       (value) => !!value || "필수 입력 사항입니다.",
       // value => (value && value.length >= 3) || 'Min 3 characters',
     ],

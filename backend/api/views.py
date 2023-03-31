@@ -53,7 +53,9 @@ class ApiPostImgDV(BaseDetailView):
         #post['hashtags'] = to_hashtag_list(obj.content)
         # # 이미지 불러오는 함수
         if connect_model(obj.id,obj.content) == 0:
-            Post(id=obj.id).check_img='True'
+            check_img=Post.objects.get(id=obj.id)
+            check_img.check_img=True
+            check_img.save()
             return JsonResponse(data=post, safe=True, status=200)
         else :
             return JsonResponse(data={}, safe=True, status=404)

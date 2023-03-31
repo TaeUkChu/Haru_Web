@@ -193,7 +193,6 @@ export default {
   justify-content: center;
 }
 #rain-gif {
-  background-color: red;
   background-image: url("@/assets/images/비오는날2.gif");
   background-size: cover;
   width: 100%;

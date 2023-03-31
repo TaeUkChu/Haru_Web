@@ -89,6 +89,7 @@
 
 <script>
 import axios from "axios";
+import Failimg from "@/assets/images/fail.png";
 
 export default {
   data: () => ({
@@ -118,7 +119,9 @@ export default {
         .then((res) => {
           console.log("POST DETAIL GET RES", res);
           this.post = res.data;
-          this.url = `http://116.38.220.14/static/imges/${postId}.png`;
+          if (this.post.check_img)
+            this.url = `http://116.38.220.14/static/imges/${postId}.png`;
+          else this.url = Failimg;
         })
         .catch((err) => {
           console.log("POST DETAIL GET ERR.RESPONSE", err.response);
