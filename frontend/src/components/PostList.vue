@@ -233,7 +233,6 @@ export default {
     createPost() {
       console.log("createPost()...");
       const postData = new FormData(document.getElementById("post-form"));
-      postData.append();
       axios
         .post("/api/post/create/", postData)
         .then((res) => {
